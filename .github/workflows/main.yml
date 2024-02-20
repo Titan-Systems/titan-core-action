@@ -1,0 +1,15 @@
+on: [push]
+
+jobs:
+  snowflake_gitops:
+    runs-on: ubuntu-latest
+    name: Snowflake GitOps example
+    steps:
+      - name: Hello world action step
+        id: hello
+        uses: Titan-Systems/snowflake-gitops
+        with:
+          who-to-greet: 'Mona the Octocat'
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
