@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bookworm
+FROM python:3.11
 
 ENV VIRTUAL_ENV=/usr/local
 ADD --chmod=755 https://astral.sh/uv/install.sh /install.sh
