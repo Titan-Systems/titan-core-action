@@ -1,1 +1,3 @@
 snowflake-connector-python
+pyyaml
+titan @ git+https://github.com/Titan-Systems/titan.git@v0.1.4
