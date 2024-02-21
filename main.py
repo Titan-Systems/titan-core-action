@@ -1,8 +1,11 @@
+import os
+
 import snowflake.connector
 
 
 def main():
-    print("Hello, World!")
+    workspace = os.environ.get("GITHUB_WORKSPACE")
+    print(f"Hello, World! [{workspace}]")
 
 
 if __name__ == "__main__":
