@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Snowflake GitOps example
     steps:
+      - uses: actions/checkout@v4
       - name: Hello world action step
         id: hello
         uses: Titan-Systems/snowflake-gitops@v1
