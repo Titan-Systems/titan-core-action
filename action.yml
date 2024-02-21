@@ -10,6 +10,10 @@ inputs:
     description: 'Comma-separated list of resource types that Titan is allowed to manage'
     required: false
     default: 'all'
+  dry-run:
+    description: 'Run the action in dry-run mode'
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
   image: 'Dockerfile'
