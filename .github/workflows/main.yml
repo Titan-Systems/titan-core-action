@@ -9,5 +9,3 @@ jobs:
       - name: Hello world action step
         id: hello
         uses: Titan-Systems/snowflake-gitops@v1
-        env:
-            GITHUB_WORKSPACE: ${{ github.workspace }}
