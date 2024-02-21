@@ -15,13 +15,15 @@ def main():
             "warehouse": os.environ["SNOWFLAKE_WAREHOUSE"],
         }
         workspace = os.environ["GITHUB_WORKSPACE"]
-        resource_path = os.environ["resource-path"]
-        allowed_resources = os.environ.get("allowed-resources", "all")
+        resource_path = os.environ["INPUT_RESOURCE-PATH"]
+        allowed_resources = os.environ.get("INPUT_ALLOWED-RESOURCES", "all")
     except KeyError as e:
         raise ValueError(f"Missing environment variable: {e}") from e
 
     conn = snowflake.connector.connect(**connection_params)
     print(f"Hello, World! [{workspace}]:{conn.role}")
+    print(f"Resource Path: {resource_path}")
+    print(f"Allowed Resources: {allowed_resources}")
 
 
 if __name__ == "__main__":
