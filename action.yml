@@ -1,5 +1,18 @@
 name: 'Snowflake GitOps'
+author: Titan Systems, Inc
 description: 'Snowflake GitOps Github Action'
+inputs:
+  resource-path:
+    description: 'Path to the resource configuration in the repo'
+    required: true
+    default: '.'
+  allowed-resources:
+    description: 'Comma-separated list of resource types that Titan is allowed to manage'
+    required: false
+    default: 'all'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+branding:
+  icon: 'upload-cloud'
+  color: 'orange'
