@@ -12,4 +12,4 @@ RUN /root/.cargo/bin/uv pip install --no-cache -r requirements.txt
 
 COPY main.py /main.py
 
-CMD ["python", "main.py"]
+CMD ["python", "/main.py"]
