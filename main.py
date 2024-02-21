@@ -69,7 +69,7 @@ def main():
     print(f"Allowed Resources: {allowed_resources}")
 
     resources = collect_resources(os.path.join(workspace, resource_path))
-    blueprint = Blueprint(resources=resources)
+    blueprint = Blueprint(name="snowflake-gitops", resources=resources)
     conn = snowflake.connector.connect(**connection_params)
     blueprint.plan(conn)
     blueprint.apply(conn)
