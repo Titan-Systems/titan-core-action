@@ -4,6 +4,7 @@ import yaml
 import snowflake.connector
 
 from titan import Blueprint
+from titan.blueprint import print_plan
 from titan.gitops import collect_resources_from_config
 
 
@@ -60,8 +61,9 @@ def main():
     resources = collect_resources(os.path.join(workspace, resource_path))
     blueprint = Blueprint(name="snowflake-gitops", resources=resources, dry_run=dry_run)
     conn = snowflake.connector.connect(**connection_params)
-    blueprint.plan(conn)
-    blueprint.apply(conn)
+    plan = blueprint.plan(conn)
+    print_plan(plan)
+    blueprint.apply(conn, plan)
 
 
 if __name__ == "__main__":
