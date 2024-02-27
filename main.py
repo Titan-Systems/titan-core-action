@@ -20,6 +20,7 @@ def collect_resources(path: str):
 
     for file in crawl(path):
         with open(file, "r") as f:
+            print(f"Reading config file: {file}")
             config = yaml.safe_load(f)
             resources.extend(collect_resources_from_config(config))
 
