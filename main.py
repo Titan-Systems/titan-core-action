@@ -60,6 +60,7 @@ def main():
 
     resources = collect_resources(os.path.join(workspace, resource_path))
     blueprint = Blueprint(name="snowflake-gitops", resources=resources, dry_run=dry_run)
+    print(resources)
     conn = snowflake.connector.connect(**connection_params)
     plan = blueprint.plan(conn)
     print_plan(plan)
