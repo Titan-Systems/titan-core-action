@@ -46,7 +46,7 @@ def main():
 
     print("Config\n------")
     print(f"\t allowed_resources: {allowed_resources}")
-    print(f"\t dry_run: {dry_run}")
+    print(f"\t dry_run: {os.environ['INPUT_DRY-RUN']} => {dry_run}")
     print(f"\t resource_path: {resource_path}")
     print(f"\t workspace: {workspace}")
 
