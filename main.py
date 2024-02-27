@@ -25,6 +25,13 @@ def collect_resources(path: str):
     return resources
 
 
+def str_to_bool(s: str) -> bool:
+    s = s.lower()
+    if s not in {"true", "false"}:
+        raise ValueError(f"Invalid value for boolean: {s}")
+    return s == "true"
+
+
 def main():
     # Bootstrap environment
     try:
@@ -38,7 +45,7 @@ def main():
         workspace = os.environ["GITHUB_WORKSPACE"]
 
         # Inputs
-        dry_run = bool(os.environ["INPUT_DRY-RUN"].lower().capitalize())
+        dry_run = str_to_bool(os.environ["INPUT_DRY-RUN"])
         resource_path = os.environ["INPUT_RESOURCE-PATH"]
         allowed_resources = os.environ.get("INPUT_ALLOWED-RESOURCES", "all")
     except KeyError as e:
