@@ -44,6 +44,12 @@ def main():
     except KeyError as e:
         raise ValueError(f"Missing environment variable: {e}") from e
 
+    print("Config\n------")
+    print(f"\t allowed_resources: {allowed_resources}")
+    print(f"\t dry_run: {dry_run}")
+    print(f"\t resource_path: {resource_path}")
+    print(f"\t workspace: {workspace}")
+
     resources = collect_resources(os.path.join(workspace, resource_path))
     blueprint = Blueprint(name="snowflake-gitops", resources=resources, dry_run=dry_run)
     conn = snowflake.connector.connect(**connection_params)
