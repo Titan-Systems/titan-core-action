@@ -1,6 +1,6 @@
 FROM python:3.11-slim-bookworm
 
-RUN apt-get -y update; apt-get -y install curl
+RUN apt-get -y update; apt-get -y install curl git
 
 ENV VIRTUAL_ENV=/usr/local
 ADD --chmod=755 https://astral.sh/uv/install.sh /install.sh
