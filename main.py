@@ -22,6 +22,9 @@ def collect_resources(path: str):
         with open(file, "r") as f:
             print(f"Reading config file: {file}")
             config = yaml.safe_load(f)
+            if not config:
+                print(f"Skipping empty config file: {file}")
+                continue
             resources.extend(collect_resources_from_config(config))
 
     return resources
