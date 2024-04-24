@@ -81,7 +81,7 @@ def main():
         resources=resources,
         run_mode=run_mode,
         dry_run=dry_run,
-        allow_role=True,
+        allow_role_switching=True,
         allowed_resources=allowed_resources,
     )
     print(resources)
