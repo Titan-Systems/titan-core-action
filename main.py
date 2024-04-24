@@ -4,7 +4,8 @@ import yaml
 import snowflake.connector
 
 from titan import Blueprint
-from titan.blueprint import print_plan
+from titan.blueprint import RunMode, print_plan
+from titan.enums import ResourceType
 from titan.gitops import collect_resources_from_config
 
 
@@ -50,20 +51,39 @@ def main():
         workspace = os.environ["GITHUB_WORKSPACE"]
 
         # Inputs
+        run_mode = os.environ["INPUT_RUN-MODE"]
         dry_run = str_to_bool(os.environ["INPUT_DRY-RUN"])
         resource_path = os.environ["INPUT_RESOURCE-PATH"]
         allowed_resources = os.environ.get("INPUT_ALLOWED-RESOURCES", "all")
     except KeyError as e:
         raise ValueError(f"Missing environment variable: {e}") from e
 
+    # Parse inputs
+    run_mode = RunMode(run_mode)
+
+    if allowed_resources == "all":
+        allowed_resources = []
+    else:
+        allowed_resources = [ResourceType(r) for r in allowed_resources.split(",")]
+
+    # Print config
     print("Config\n------")
+    print(f"\t run_mode: {run_mode}")
     print(f"\t allowed_resources: {allowed_resources}")
     print(f"\t dry_run: {os.environ['INPUT_DRY-RUN']} => {dry_run}")
     print(f"\t resource_path: {resource_path}")
     print(f"\t workspace: {workspace}")
 
     resources = collect_resources(os.path.join(workspace, resource_path))
-    blueprint = Blueprint(name="snowflake-gitops", resources=resources, dry_run=dry_run)
+
+    blueprint = Blueprint(
+        name="snowflake-gitops",
+        resources=resources,
+        run_mode=run_mode,
+        dry_run=dry_run,
+        allow_role=True,
+        allowed_resources=allowed_resources,
+    )
     print(resources)
     conn = snowflake.connector.connect(**connection_params)
     plan = blueprint.plan(conn)

@@ -1,17 +1,21 @@
 name: 'Snowflake GitOps'
 author: Titan Systems, Inc
-description: 'Snowflake GitOps Github Action'
+description: 'Snowflake GitOps, powered by Titan'
 inputs:
+  run-mode:
+    description: 'Run mode determines which actions can be performed. `create-or-update` mode will never drop, rename, or change ownership of resources. `fully-managed` mode will perform all actions.'
+    required: true
+    default: 'create-or-update'
   resource-path:
-    description: 'Path to the resource configuration in the repo'
+    description: 'Resource path should point to the file or folder in the repo that contains the resource configuration.'
     required: true
     default: '.'
   allowed-resources:
-    description: 'Comma-separated list of resource types that Titan is allowed to manage'
+    description: 'Allowed resources is a comma-separated list of resource types that Titan is allowed to manage. If not provided, Titan will manage all resources.'
     required: false
     default: 'all'
   dry-run:
-    description: 'Run the action in dry-run mode'
+    description: 'When dry run is true, Titan will not make any changes to Snowflake.'
     required: false
     default: 'false'
 runs:
