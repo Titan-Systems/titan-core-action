@@ -10,8 +10,8 @@ inputs:
     description: 'Resource path should point to the file or folder in the repo that contains the resource configuration.'
     required: true
     default: '.'
-  allowed-resources:
-    description: 'Allowed resources is a comma-separated list of resource types that Titan is allowed to manage. If not provided, Titan will manage all resources.'
+  valid-resource-types:
+    description: 'Valid resource types is a comma-separated list of resource types that Titan is allowed to manage. If not provided, Titan will manage all resources.'
     required: false
     default: 'all'
   dry-run:
