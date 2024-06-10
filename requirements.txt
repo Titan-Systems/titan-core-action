@@ -1,3 +1,3 @@
 snowflake-connector-python
 pyyaml
-titan @ git+https://github.com/Titan-Systems/titan.git@bugfix/2024-05-08-blueprint-resource-handling
+titan @ git+https://github.com/Titan-Systems/titan.git
