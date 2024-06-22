@@ -54,24 +54,22 @@ def main():
         run_mode = os.environ["INPUT_RUN-MODE"]
         dry_run = str_to_bool(os.environ["INPUT_DRY-RUN"])
         resource_path = os.environ["INPUT_RESOURCE-PATH"]
-        valid_resource_types = os.environ.get("INPUT_VALID-RESOURCE-TYPES", "all")
+        allowlist = os.environ.get("INPUT_ALLOWLIST", "all")
     except KeyError as e:
         raise ValueError(f"Missing environment variable: {e}") from e
 
     # Parse inputs
     run_mode = RunMode(run_mode)
 
-    if valid_resource_types == "all":
-        valid_resource_types = []
+    if allowlist == "all":
+        allowlist = []
     else:
-        valid_resource_types = [
-            ResourceType(r) for r in valid_resource_types.split(",")
-        ]
+        allowlist = [ResourceType(r) for r in allowlist.split(",")]
 
     # Print config
     print("Config\n------")
     print(f"\t run_mode: {run_mode}")
-    print(f"\t valid_resource_types: {valid_resource_types}")
+    print(f"\t allowlist: {allowlist}")
     print(f"\t dry_run: {os.environ['INPUT_DRY-RUN']} => {dry_run}")
     print(f"\t resource_path: {resource_path}")
     print(f"\t workspace: {workspace}")
@@ -83,9 +81,7 @@ def main():
         resources=resources,
         run_mode=run_mode,
         dry_run=dry_run,
-        allow_role_switching=True,
-        ignore_ownership=True,
-        valid_resource_types=valid_resource_types,
+        allowlist=allowlist,
     )
     print(resources)
     conn = snowflake.connector.connect(**connection_params)
