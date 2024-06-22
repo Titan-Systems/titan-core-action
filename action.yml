@@ -1,17 +1,17 @@
-name: 'Snowflake GitOps'
+name: 'Titan Core: Snowflake infrastructure as code'
 author: Titan Systems, Inc
-description: 'Snowflake GitOps, powered by Titan'
+description: 'Deploy to Snowflake with Titan'
 inputs:
   run-mode:
-    description: 'Run mode determines which actions can be performed. `create-or-update` mode will never drop, rename, or change ownership of resources. `fully-managed` mode will perform all actions.'
+    description: 'Run mode determines which actions can be performed. `create-or-update` mode will never drop, rename, or change ownership of resources.'
     required: true
     default: 'create-or-update'
   resource-path:
     description: 'Resource path should point to the file or folder in the repo that contains the resource configuration.'
     required: true
     default: '.'
-  valid-resource-types:
-    description: 'Valid resource types is a comma-separated list of resource types that Titan is allowed to manage. If not provided, Titan will manage all resources.'
+  allowlist:
+    description: 'Allowlist is a comma-separated list of resource types that Titan is allowed to manage. If not provided, Titan will manage all resources.'
     required: false
     default: 'all'
   dry-run:
