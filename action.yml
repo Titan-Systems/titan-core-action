@@ -1,4 +1,4 @@
-name: 'Titan Core: Snowflake infrastructure as code'
+name: 'Titan Core Snowflake infrastructure as code'
 author: Titan Systems, Inc
 description: 'Deploy to Snowflake with Titan'
 inputs:
