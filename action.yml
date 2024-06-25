@@ -22,5 +22,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
 branding:
-  icon: 'upload-cloud'
+  icon: 'terminal'
   color: 'orange'
