@@ -18,15 +18,35 @@ def crawl(path: str):
 
 def collect_resources(path: str):
     resources = []
+    files_read = 0
 
-    for file in crawl(path):
-        with open(file, "r") as f:
-            print(f"Reading config file: {file}")
-            config = yaml.safe_load(f)
-            if not config:
-                print(f"Skipping empty config file: {file}")
-                continue
-            resources.extend(collect_resources_from_config(config))
+    if os.path.isfile(path):
+        # Handle single file
+        if path.endswith((".yaml", ".yml")):
+            print(f"Reading config file: {path}")
+            with open(path, "r") as f:
+                config = yaml.safe_load(f)
+                if config:
+                    resources.extend(collect_resources_from_config(config))
+                    files_read += 1
+                else:
+                    print(f"Skipping empty config file: {path}")
+    elif os.path.isdir(path):
+        # Handle directory
+        for file in crawl(path):
+            with open(file, "r") as f:
+                print(f"Reading config file: {file}")
+                config = yaml.safe_load(f)
+                if config:
+                    resources.extend(collect_resources_from_config(config))
+                    files_read += 1
+                else:
+                    print(f"Skipping empty config file: {file}")
+    else:
+        raise ValueError(f"Invalid path: {path}. Must be a file or directory.")
+
+    if files_read == 0:
+        raise ValueError(f"No valid YAML files were read from the given path: {path}")
 
     return resources
 
