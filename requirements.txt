@@ -1,3 +1,3 @@
 snowflake-connector-python
 pyyaml
-titan-core<0.9
+titan-core==0.10.0
