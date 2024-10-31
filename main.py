@@ -40,7 +40,7 @@ def main():
     try:
         json.loads(vars)
     except json.JSONDecodeError as e:
-        raise ValueError(f"Invalid JSON for vars: {vars}") from e
+        raise ValueError(f"Invalid JSON for vars: {repr(vars)}") from e
 
     action_config = {
         "run_mode": run_mode,
