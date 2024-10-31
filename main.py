@@ -35,6 +35,12 @@ def to_str(s: Optional[str]) -> Optional[str]:
     return s
 
 
+def pretty_print_allowlist(allowlist: Optional[list]) -> str:
+    if allowlist is None:
+        return "all"
+    return ", ".join([resource_type.value for resource_type in allowlist])
+
+
 def main():
     # Bootstrap environment
     try:
@@ -67,28 +73,29 @@ def main():
     if env_vars:
         action_config["vars"] = merge_vars(action_config.get("vars", {}), env_vars)
 
-    print("Configuration\n------")
-    print(f"\t run_mode: {run_mode}")
-    print(f"\t resource_path: {resource_path}")
-    print(f"\t allowlist: {allowlist}")
-    print(f"\t dry_run: {dry_run}")
-    print(f"\t scope: {scope}")
-    print(f"\t database: {database}")
-    print(f"\t schema: {schema}")
-    print(f"\t workspace: {workspace}")
+    print("Configuration\n----------------")
+    print(f"  run_mode:      {run_mode}")
+    print(f"  resource_path: {resource_path}")
+    print(f"  allowlist:     {pretty_print_allowlist(allowlist)}")
+    print(f"  dry_run:       {dry_run}")
+    print(f"  scope:         {scope}")
+    print(f"  database:      {database or '---'}")
+    print(f"  schema:        {schema or '---'}")
+    print(f"  workspace:     {workspace}")
 
     if action_config["vars"]:
-        print("Vars\n------")
+        print("Vars\n----------------")
         for key in action_config["vars"].keys():
-            print(f"\t {key}")
+            print(f"  {key}")
 
     configs = collect_configs_from_path(os.path.join(workspace, resource_path))
     yaml_config = {}
 
-    print("Resource files\n------")
+    print("Resource files\n----------------")
     for config in configs:
-        print(f"\t{config[0]}")
-        yaml_config = merge_configs(yaml_config, config[1])
+        file_path, config_dict = config
+        print(f"  {file_path.lstrip(workspace).lstrip('/')}")
+        yaml_config = merge_configs(yaml_config, config_dict)
 
     blueprint_config = collect_blueprint_config(yaml_config, action_config)
     blueprint = Blueprint.from_config(blueprint_config)
