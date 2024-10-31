@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Optional
 
 from titan import Blueprint
 from titan.blueprint import print_plan
@@ -20,6 +21,13 @@ def str_to_bool(s: str) -> bool:
     return s == "true"
 
 
+def str_to_json(s: Optional[str]) -> Optional[dict]:
+    if s is None or s == "" or s == "None":
+        return None
+
+    return json.loads(s)
+
+
 def main():
     # Bootstrap environment
     try:
@@ -29,7 +37,7 @@ def main():
         run_mode = os.environ["INPUT_RUN-MODE"]
         resource_path = os.environ["INPUT_RESOURCE-PATH"]
         allowlist = os.environ.get("INPUT_ALLOWLIST", "all")
-        vars = os.environ.get("INPUT_VARS", None)
+        vars = str_to_json(os.environ.get("INPUT_VARS", None))
         dry_run = str_to_bool(os.environ["INPUT_DRY-RUN"])
         scope = os.environ.get("INPUT_SCOPE", None)
         database = os.environ.get("INPUT_DATABASE", None)
@@ -37,16 +45,11 @@ def main():
     except KeyError as e:
         raise ValueError(f"Missing environment variable: {e}") from e
 
-    try:
-        json.loads(vars)
-    except json.JSONDecodeError as e:
-        raise ValueError(f"Invalid JSON for vars: {repr(vars)}") from e
-
     action_config = {
         "run_mode": run_mode,
         "resource_path": resource_path,
         "allowlist": allowlist,
-        "vars": json.loads(vars) if vars else None,
+        "vars": vars,
         "dry_run": dry_run,
         "scope": scope,
         "database": database,
