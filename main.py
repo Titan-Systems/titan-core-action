@@ -10,6 +10,7 @@ from titan.gitops import (
     collect_vars_from_environment,
     merge_configs,
     merge_vars,
+    parse_resources,
 )
 from titan.operations.connector import connect
 
@@ -36,7 +37,7 @@ def main():
         # Inputs
         run_mode = os.environ["INPUT_RUN-MODE"]
         resource_path = os.environ["INPUT_RESOURCE-PATH"]
-        allowlist = os.environ.get("INPUT_ALLOWLIST", "all")
+        allowlist = parse_resources(os.environ.get("INPUT_ALLOWLIST", "all"))
         vars = str_to_json(os.environ.get("INPUT_VARS", None))
         dry_run = str_to_bool(os.environ["INPUT_DRY-RUN"])
         scope = os.environ.get("INPUT_SCOPE", None)
