@@ -15,7 +15,9 @@ inputs:
     required: false
     default: 'all'
   vars:
-    description: 'Dynamic values to pass to Titan Core. Vars are specified with JSON (e.g. vars: \'{"var_name": "var_value"}\').'
+    description: >-
+      Dynamic values to pass to Titan Core. Vars are specified with JSON
+      (e.g. vars: '{"var_name": "var_value"}').
     required: false
     default: None
   dry-run:
