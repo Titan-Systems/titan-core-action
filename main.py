@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from typing import Optional
 
 from titan import Blueprint
@@ -13,6 +14,8 @@ from titan.gitops import (
     parse_resources,
 )
 from titan.operations.connector import connect
+
+sys.stdout.reconfigure(line_buffering=True)
 
 
 def str_to_bool(s: str) -> bool:
@@ -73,7 +76,7 @@ def main():
     if env_vars:
         action_config["vars"] = merge_vars(action_config.get("vars", {}), env_vars)
 
-    print("Configuration\n----------------")
+    print("\nConfiguration\n----------------")
     print(f"  run_mode:      {run_mode}")
     print(f"  resource_path: {resource_path}")
     print(f"  allowlist:     {pretty_print_allowlist(allowlist)}")
@@ -84,18 +87,20 @@ def main():
     print(f"  workspace:     {workspace}")
 
     if action_config["vars"]:
-        print("Vars\n----------------")
+        print("\nVars\n----------------")
         for key in action_config["vars"].keys():
             print(f"  {key}")
 
     configs = collect_configs_from_path(os.path.join(workspace, resource_path))
     yaml_config = {}
 
-    print("Resource files\n----------------")
+    print("\nResource files\n----------------")
     for config in configs:
         file_path, config_dict = config
         print(f"  {file_path.lstrip(workspace).lstrip('/')}")
         yaml_config = merge_configs(yaml_config, config_dict)
+
+    print("\n\n")
 
     blueprint_config = collect_blueprint_config(yaml_config, action_config)
     blueprint = Blueprint.from_config(blueprint_config)
