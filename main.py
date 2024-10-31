@@ -70,9 +70,10 @@ def main():
     print(f"\t schema: {schema}")
     print(f"\t workspace: {workspace}")
 
-    print("Vars\n------")
-    for key in action_config["vars"].keys():
-        print(f"\t {key}")
+    if action_config["vars"]:
+        print("Vars\n------")
+        for key in action_config["vars"].keys():
+            print(f"\t {key}")
 
     configs = collect_configs_from_path(os.path.join(workspace, resource_path))
     yaml_config = {}
