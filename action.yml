@@ -1,9 +1,9 @@
 name: 'Titan Core Snowflake infrastructure as code'
-author: Titan Systems, Inc
+author: 'Titan Systems, Inc'
 description: 'Deploy to Snowflake with Titan'
 inputs:
   run-mode:
-    description: 'Run mode determines which actions can be performed. `create-or-update` mode will never drop, rename, or change ownership of resources.'
+    description: 'Run mode determines which actions can be performed. Valid options: `create-or-update` (never drops resources), `sync` (full resource control).'
     required: true
     default: 'create-or-update'
   resource-path:
@@ -14,10 +14,28 @@ inputs:
     description: 'Allowlist is a comma-separated list of resource types that Titan is allowed to manage. If not provided, Titan will manage all resources.'
     required: false
     default: 'all'
+  vars:
+    description: >-
+      Dynamic values, specified as a JSON dictionary
+      (e.g. vars: '{"var_name": "var_value"}').
+    required: false
+    default: None
   dry-run:
     description: 'When dry run is true, Titan will not make any changes to Snowflake.'
     required: false
     default: 'false'
+  scope:
+    description: 'Scope limits which resources Titan will manage. Valid options: `account`, `database`, `schema`.'
+    required: false
+    default: 'account'
+  database:
+    description: 'Name of the database to limit the scope to. Only valid when scope is `database`.'
+    required: false
+    default: None
+  schema:
+    description: 'Name of the schema to limit the scope to. Only valid when scope is `schema`.'
+    required: false
+    default: None
 runs:
   using: 'docker'
   image: 'Dockerfile'

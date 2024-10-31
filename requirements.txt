@@ -1,3 +1,3 @@
 snowflake-connector-python
 pyyaml
-titan-core<0.9
+git+https://github.com/Titan-Systems/titan.git@feature/config-path#egg=titan-core
