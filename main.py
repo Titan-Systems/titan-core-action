@@ -37,6 +37,11 @@ def main():
     except KeyError as e:
         raise ValueError(f"Missing environment variable: {e}") from e
 
+    try:
+        json.loads(vars)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Invalid JSON for vars: {vars}") from e
+
     action_config = {
         "run_mode": run_mode,
         "resource_path": resource_path,
