@@ -29,6 +29,12 @@ def str_to_json(s: Optional[str]) -> Optional[dict]:
     return json.loads(s)
 
 
+def to_str(s: Optional[str]) -> Optional[str]:
+    if s is None or s == "None" or s == "":
+        return None
+    return s
+
+
 def main():
     # Bootstrap environment
     try:
@@ -40,9 +46,9 @@ def main():
         allowlist = parse_resources(os.environ.get("INPUT_ALLOWLIST", "all"))
         vars = str_to_json(os.environ.get("INPUT_VARS", None))
         dry_run = str_to_bool(os.environ["INPUT_DRY-RUN"])
-        scope = os.environ.get("INPUT_SCOPE", None)
-        database = os.environ.get("INPUT_DATABASE", None)
-        schema = os.environ.get("INPUT_SCHEMA", None)
+        scope = to_str(os.environ.get("INPUT_SCOPE", None))
+        database = to_str(os.environ.get("INPUT_DATABASE", None))
+        schema = to_str(os.environ.get("INPUT_SCHEMA", None))
     except KeyError as e:
         raise ValueError(f"Missing environment variable: {e}") from e
 
