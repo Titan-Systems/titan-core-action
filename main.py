@@ -74,7 +74,7 @@ def main():
 
     env_vars = collect_vars_from_environment()
     if env_vars:
-        action_config["vars"] = merge_vars(action_config.get("vars", {}), env_vars)
+        action_config["vars"] = merge_vars(action_config["vars"] or {}, env_vars)
 
     print("\nConfiguration\n----------------")
     print(f"  run_mode:      {run_mode}")
