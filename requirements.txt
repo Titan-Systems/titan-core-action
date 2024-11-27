@@ -1,4 +1,3 @@
 snowflake-connector-python==3.12.3
 pyyaml
-pyOpenSSL>=22.1.0
-titan-core>=0.10
+titan-core @ git+https://github.com/Titan-Systems/titan@chore/python-versions
